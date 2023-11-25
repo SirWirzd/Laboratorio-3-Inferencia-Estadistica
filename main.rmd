@@ -1,0 +1,57 @@
+---
+output:
+  pdf_document: default
+  latex_engine: xelatex
+  html_document: default
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+### Laboratorio 3 - Inferencia Estadistica
+### Laboratorio Semestral
+
+### Integrantes
+
+- Gianfranco Astorga Saco
+- JeanLucas Peñaloza
+- Diego Godoy
+
+# Fecha de Entrega 
+
+- 26 Noviembre del 2023
+
+### 1. Introducción
+
+El presente Laboratorio tiene como objetivo fundamental asesorar al gerente de desarrollo sustentable de SERVSAT mediante la aplicación
+de un modelo de regresion lineal. Este modelo buscará identificar y analizar las variables que inciden significativamente en la percepción
+de los trabajadores de la empresa SERVSAT, respecto a la Responsabilidad Social Empresarial (RSE) de la empresa, utilizando como base una muestra 
+representativa de la población de trabajadores de la empresa SERVSAT.
+
+Por otra parte, se pretende proporcionar una herramienta que permita a la empresa SERVSAT, identificar las variables que inciden significativamente
+en la percepción de los trabajadores respecto a la RSE de la empresa, con el fin de que la empresa pueda enfocar sus esfuerzos en mejorar las variables
+que inciden negativamente en la percepción de los trabajadores respecto a la RSE de la empresa.
+
+### 1.1 Descripción de la base de datos
+
+La base de datos utilizada para el presente laboratorio corresponde a una muestra representativa de la población de trabajadores de la empresa SERVSAT,
+la cual fue obtenida mediante una encuesta aplicada a los trabajadores de la empresa SERVSAT. La encuesta fue aplicada a 100 trabajadores de la empresa SERVSAT,
+de los cuales 50 trabajadores pertenecen al área de operaciones y 50 trabajadores pertenecen al área de administración. La encuesta aplicada a los trabajadores de la empresa
+SERVSAT, consta de 20 preguntas, las cuales se encuentran relacionadas con la percepción de los trabajadores respecto a la RSE de la empresa SERVSAT.
+
+### 2. Desarrollo
+
+### 2.1 Preparación de la base de datos
+
+En primer lugar, se procede a cargar la base de datos en R, para ello se utiliza la función foreing::read_spss, la cual permite cargar archivos de extensión .sav en R.
+
+```{r}
+
+library(foreign)
+
+# Cargar base de datos
+
+base_de_datos <- read.spss("C:/Users/choco/OneDrive/Escritorio/Universidad/Estadistica Inferencial/Laboratorio 3/Percepcion-de-la-RSE.sav", to.data.frame = TRUE)  # nolint
+```
+
+
