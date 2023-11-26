@@ -156,7 +156,7 @@ Se procede a realizar un modelo de regresión lineal múltiple con las variables
 
 regresion_lineal_multiple <- lm(cbind(RAmbiental, REconómica) ~ RSE, data = Percepcion_de_la_RSE) #nolint
 
-summary(regresion_lineal_multiple)
+summary(regresion_lineal_multiple) #nolint
 
 #nolint
 ```
