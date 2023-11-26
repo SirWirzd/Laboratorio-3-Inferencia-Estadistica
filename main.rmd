@@ -135,9 +135,9 @@ Los coeficientes son significativos al 95% si el valor p (Pr(>|t|)) es menor a 0
 
 # Interpretacion del modelo de regresion en R^2
 
-library(QuantPsyc)
+#library(car)
 
-lm.beta(regresion_lineal_simple)
+#std.coef(regresion_lineal_simple)
 
 #nolint
 ```
