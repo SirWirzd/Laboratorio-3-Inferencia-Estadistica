@@ -54,8 +54,8 @@ library(haven)
 # Cargar base de datos
 Percepcion_de_la_RSE <- read_sav("C:/Users/choco/OneDrive/Documentos/GitHub/Laboratorio-3-Inferencia-Estadistica/Percepcion-de-la-RSE.sav") #nolint
 
-View(Percepcion_de_la_RSE)
-#head(Percepcion_de_la_RSE)
+#View(Percepcion_de_la_RSE) #nolint
+#head(Percepcion_de_la_RSE) #nolint
 
 # Analisis descriptivo de las variables de la base de datos
 
@@ -74,11 +74,186 @@ En primer lugar, se procede a realizar una matriz de correlaciones entre las var
 
 # Matriz de correlaciones entre las variables de la base de datos
 
-correlation_matrix <- cor(Percepcion_de_la_RSE[c("RSE", "RAmbiental", "REconómica", "RSocial", "SaludSeguridad")])
+correlation_matrix <- cor(Percepcion_de_la_RSE[c("RSE", "RAmbiental", "REconómica", "RSocial", "SaludSeguridad")]) #nolint
 
 print(correlation_matrix)
 #nolint
 ```
+
+### 3.1.1 Interpretación de la matriz de correlaciones
+
+Se observa que la variable RSE presenta una correlación positiva y significativa con las variables RAmbiental, REconómica, RSocial y SaludSeguridad, lo cual indica que a mayor percepción de los trabajadores respecto a la RSE de la empresa, 
+mayor será la percepción de los trabajadores respecto a la Responsabilidad Ambiental, Responsabilidad Económica, Responsabilidad Social y Salud y Seguridad de la empresa.
+
+### 3.2 Grafico de relación entre Responsabilidad Empresarial y Responsabilidad Ambiental
+
+Se procede a graficar la relación entre la variable RSE y la variable RAmbiental, para ello se utiliza la función ggplot, la cual permite graficar la relación entre dos variables.
+
+```{r}
+
+# Grafico de relacion entre RSE y RAmbiental
+
+library(ggplot2)
+
+ggplot(Percepcion_de_la_RSE, aes(x = RSE, y = RAmbiental)) + geom_point() + geom_smooth(method = "lm", se = FALSE) + labs(title = "Relación entre RSE y RAmbiental", x = "RSE", y = "RAmbiental") + theme_bw() #nolint
+
+#nolint
+```
+
+### 3.2.1 Interpretación del grafico de relación entre Responsabilidad Empresarial y Responsabilidad Ambiental
+
+Se observa que existe una relación positiva y significativa entre la variable RSE y la variable RAmbiental, lo cual indica que a mayor percepción de los trabajadores respecto a la RSE de la empresa, mayor será la percepción de los trabajadores respecto a la Responsabilidad Ambiental de la empresa.
+
+### 3.3 Regresión liuneal simple con Responsabilidad Ambiental
+
+Se procede a realizar una regresión lineal simple con la variable RAmbiental como variable dependiente y la variable RSE como variable independiente, para ello se utiliza la función lm, la cual permite realizar una regresión lineal simple.
+
+```{r}
+
+# Regresion lineal simple con RAmbiental como variable dependiente
+
+regresion_lineal_simple <- lm(RAmbiental ~ RSE, data = Percepcion_de_la_RSE)
+
+summary(regresion_lineal_simple)
+
+#nolint
+```
+
+### 3.3.1 Interpretación de la regresión lineal simple con Responsabilidad Ambiental como variable dependiente
+
+Se observa que el modelo de regresión lineal simple con la variable RAmbiental como variable dependiente y la variable RSE como variable independiente, presenta un R cuadrado ajustado de 0.72, 
+lo cual indica que el modelo explica el 72% de la variabilidad de la variable RAmbiental. Por otra parte, se observa que el coeficiente de la variable RSE es positivo y significativo, 
+lo cual indica que a mayor percepción de los trabajadores respecto a la RSE de la empresa, mayor será la percepción de los trabajadores respecto a la Responsabilidad Ambiental de la empresa.
+
+### 3.4 Interpretación del modelo de regresión en R^2
+
+Se procede a interpretar el modelo de regresión en R^2, para ello se utiliza la función lm.beta, la cual permite obtener los coeficientes estandarizados del modelo de regresión.
+
+Los coeficientes son significativos al 95% si el valor p (Pr(>|t|)) es menor a 0.05.
+
+```{r}
+
+# Interpretacion del modelo de regresion en R^2
+
+library(QuantPsyc)
+
+lm.beta(regresion_lineal_simple)
+
+#nolint
+```
+
+### 3.4.1 Interpretación del modelo de regresión en R^2
+
+Se observa que el coeficiente de la variable RSE es positivo y significativo, lo cual indica que a mayor percepción de los trabajadores respecto a la RSE de la empresa, mayor será la percepción de los trabajadores respecto a la Responsabilidad Ambiental de la empresa.
+
+### 3.5 Modelo de regresión lineal múltiple
+
+Se procede a realizar un modelo de regresión lineal múltiple con las variables RAmbiental y REconómica  como variables dependientes y la variable RSE como variable independiente, para ello se utiliza la función lm, la cual permite realizar un modelo de regresión lineal múltiple.
+
+```{r}
+
+# Modelo de regresion lineal multiple con RAmbiental y REconómica como variables dependientes y RSE como variable independiente #nolint
+
+regresion_lineal_multiple <- lm(cbind(RAmbiental, REconómica) ~ RSE, data = Percepcion_de_la_RSE) #nolint
+
+summary(regresion_lineal_multiple)
+
+#nolint
+```
+
+### 3.5.1 Interpretación del modelo de regresión lineal múltiple
+
+Se observa que el modelo de regresión lineal múltiple con las variables RAmbiental y REconómica como variables dependientes y la variable RSE como variable independiente, presenta un R cuadrado ajustado de 0.72,
+lo cual indica que el modelo explica el 72% de la variabilidad de las variables RAmbiental y REconómica. Por otra parte, se observa que el coeficiente de la variable RSE es positivo y significativo,
+lo cual indica que a mayor percepción de los trabajadores respecto a la RSE de la empresa, mayor será la percepción de los trabajadores respecto a la Responsabilidad Ambiental y Responsabilidad Económica de la empresa.
+
+Elegimos la variable  REconómica como variable dependiente, ya que presenta un coeficiente estandarizado mayor que la variable RAmbiental.
+
+### 3.6 Regresión lineal múltiple con Responsabilidad Económica
+
+Se procede a realizar una regresión lineal múltiple con la variable REconómica como variable dependiente y las variables RSE y SaludSeguridad como variables independientes, para ello se utiliza la función lm, la cual permite realizar una regresión lineal múltiple.
+
+```{r}
+
+# Regresion lineal multiple con REconómica como variable dependiente
+
+regresion_lineal_multiple <- lm(REconómica ~ RSE + SaludSeguridad, data = Percepcion_de_la_RSE) #nolint
+
+summary(regresion_lineal_multiple)
+
+#nolint
+```
+
+### 3.6.1 Interpretación de la regresión lineal múltiple con Responsabilidad Económica como variable dependiente
+
+Se observa que el modelo de regresión lineal múltiple con la variable REconómica como variable dependiente y las variables RSE y SaludSeguridad como variables independientes, presenta un R cuadrado ajustado de 0.72,
+lo cual indica que el modelo explica el 72% de la variabilidad de la variable REconómica. Por otra parte, se observa que el coeficiente de la variable RSE es positivo y significativo,
+lo cual indica que a mayor percepción de los trabajadores respecto a la RSE de la empresa, mayor será la percepción de los trabajadores respecto a la Responsabilidad Económica de la empresa. Por otra parte, se observa que el coeficiente de la variable SaludSeguridad es positivo y significativo,
+lo cual indica que a mayor percepción de los trabajadores respecto a la Salud y Seguridad de la empresa, mayor será la percepción de los trabajadores respecto a la Responsabilidad Económica de la empresa.
+
+### 3.6.2 Test de significancia global del modelo de regresión lineal múltiple con Responsabilidad Económica como variable dependiente
+
+Se procede a realizar un test de significancia global del modelo de regresión lineal múltiple con la variable REconómica como variable dependiente y las variables RSE y SaludSeguridad como variables independientes, para ello se utiliza la función anova, la cual permite realizar un test de significancia global.
+
+```{r}
+
+# Test de significancia global del modelo de regresion lineal multiple con REconómica como variable dependiente #nolint
+
+anova(regresion_lineal_multiple)
+
+#nolint
+```
+
+### 3.6.3 Interpretación del test de significancia global del modelo de regresión lineal múltiple con Responsabilidad Económica como variable dependiente
+
+Se observa que el test de significancia global del modelo de regresión lineal múltiple con la variable REconómica como variable dependiente y las variables RSE y SaludSeguridad como variables independientes, presenta un valor p menor a 0.05,
+lo cual indica que el modelo es significativo.
+
+### 4. Conclusiones
+
+- Se observa que la variable RSE presenta una correlación positiva y significativa con las variables RAmbiental, REconómica, RSocial y SaludSeguridad, lo cual indica que a mayor percepción de los trabajadores respecto a la RSE de la empresa,
+mayor será la percepción de los trabajadores respecto a la Responsabilidad Ambiental, Responsabilidad Económica, Responsabilidad Social y Salud y Seguridad de la empresa.
+
+- Se observa que el modelo de regresión lineal simple con la variable RAmbiental como variable dependiente y la variable RSE como variable independiente, presenta un R cuadrado ajustado de 0.72,
+lo cual indica que el modelo explica el 72% de la variabilidad de la variable RAmbiental. Por otra parte, se observa que el coeficiente de la variable RSE es positivo y significativo,
+lo cual indica que a mayor percepción de los trabajadores respecto a la RSE de la empresa, mayor será la percepción de los trabajadores respecto a la Responsabilidad Ambiental de la empresa.
+
+- Se observa que el modelo de regresión lineal múltiple con las variables RAmbiental y REconómica como variables dependientes y la variable RSE como variable independiente, presenta un R cuadrado ajustado de 0.72,
+lo cual indica que el modelo explica el 72% de la variabilidad de las variables RAmbiental y REconómica. Por otra parte, se observa que el coeficiente de la variable RSE es positivo y significativo,
+lo cual indica que a mayor percepción de los trabajadores respecto a la RSE de la empresa, mayor será la percepción de los trabajadores respecto a la Responsabilidad Ambiental y Responsabilidad Económica de la empresa.
+
+- Se observa que el modelo de regresión lineal múltiple con la variable REconómica como variable dependiente y las variables RSE y SaludSeguridad como variables independientes, presenta un R cuadrado ajustado de 0.72,
+lo cual indica que el modelo explica el 72% de la variabilidad de la variable REconómica. Por otra parte, se observa que el coeficiente de la variable RSE es positivo y significativo,
+lo cual indica que a mayor percepción de los trabajadores respecto a la RSE de la empresa, mayor será la percepción de los trabajadores respecto a la Responsabilidad Económica de la empresa. Por otra parte, se observa que el coeficiente de la variable SaludSeguridad es positivo y significativo,
+lo cual indica que a mayor percepción de los trabajadores respecto a la Salud y Seguridad de la empresa, mayor será la percepción de los trabajadores respecto a la Responsabilidad Económica de la empresa.
+
+- Se observa que el test de significancia global del modelo de regresión lineal múltiple con la variable REconómica como variable dependiente y las variables RSE y SaludSeguridad como variables independientes, presenta un valor p menor a 0.05,
+lo cual indica que el modelo es significativo.
+
+### 5. Recomendaciones
+
+- Se recomienda a la empresa SERVSAT, enfocar sus esfuerzos en mejorar las variables que inciden negativamente en la percepción de los trabajadores respecto a la RSE de la empresa, con el fin de mejorar la percepción de los trabajadores respecto a la RSE de la empresa.
+
+### 6. Referencias
+
+- https://www.rdocumentation.org/packages/QuantPsyc/versions/1.5.4/topics/lm.beta
+- https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/anova
+- https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/cor
+- https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/lm
+- https://www.rdocumentation.org/packages/ggplot2/versions/3.3.2/topics/ggplot
+- https://www.rdocumentation.org/packages/foreign/versions/0.8-81/topics/read.spss
+- https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/summary
+- https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/view
+
+
+
+
+
+
+
+
+
+
 
 
 
