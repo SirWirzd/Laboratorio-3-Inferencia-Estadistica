@@ -47,11 +47,42 @@ En primer lugar, se procede a cargar la base de datos en R, para ello se utiliza
 
 ```{r}
 
-library(foreign)
+# Cargar librerias
+
+library(haven)
 
 # Cargar base de datos
+Percepcion_de_la_RSE <- read_sav("C:/Users/choco/OneDrive/Documentos/GitHub/Laboratorio-3-Inferencia-Estadistica/Percepcion-de-la-RSE.sav") #nolint
 
-base_de_datos <- read.spss("C:/Users/choco/OneDrive/Escritorio/Universidad/Estadistica Inferencial/Laboratorio 3/Percepcion-de-la-RSE.sav", to.data.frame = TRUE)  # nolint
+View(Percepcion_de_la_RSE)
+#head(Percepcion_de_la_RSE)
+
+# Analisis descriptivo de las variables de la base de datos
+
+summary(Percepcion_de_la_RSE)
+
+#nolint
 ```
+
+### 3. Desarrollo 
+
+### 3.1 Matriz de Correlaciones
+
+En primer lugar, se procede a realizar una matriz de correlaciones entre las variables de la base de datos, para ello se utiliza la función cor, la cual permite obtener una matriz de correlaciones entre las variables de la base de datos.
+
+```{r}
+
+# Matriz de correlaciones entre las variables de la base de datos
+
+correlation_matrix <- cor(Percepcion_de_la_RSE[c("RSE", "RAmbiental", "REconómica", "RSocial", "SaludSeguridad")])
+
+print(correlation_matrix)
+#nolint
+```
+
+
+
+
+
 
 
